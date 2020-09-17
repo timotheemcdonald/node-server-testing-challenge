@@ -4,11 +4,7 @@ const server = require("./server.js");
 const db = require('../data/dbConfig')
 
 describe("server", () => {
-    // // describe("environment", () => {
-    // //     it('should set the DB_ENV variable to "testing"', () => {
-    // //         expect(process.env.DB_ENV).toBe("testing");
-    // //     });
-    // });
+
     describe("GET /", () => {
         it("should return HTTP status code 200", () => {
             return supertest(server)
@@ -59,21 +55,5 @@ describe("server", () => {
             expect(res.body.name).toBe("Ariadne");
         });
 
-        // it("should insert a collection of operas into the database", async () => {
-        //     const data = [
-        //         {
-        //             name: "Ariadne",
-        //         },
-        //         {
-        //             name: "Oedipus",
-        //         },
-        //     ];
-
-        //     await supertest(server).post("/opera").send(data);
-
-        //     const operas = await db("operas");
-
-        //     expect(operas).toHaveLength(5);
-        // });
     });
 });
