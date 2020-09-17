@@ -1,7 +1,7 @@
 const supertest = require("supertest");
 
 const server = require("./server.js");
-const db = require("../data/dbConfig.js");
+const db = require('../data/dbConfig')
 
 describe("server", () => {
     describe("environment", () => {
@@ -32,13 +32,12 @@ describe("server", () => {
     });
     describe("POST /opera", () => {
         beforeEach(async () => {
-            // trucate or empty the hobbits table
             await db("operas").truncate();
         });
 
         it("should return 201 when passed correct data", () => {
             return supertest(server)
-                .post("/operas")
+                .post("/")
                 .send({ name: "Ariadne auf Naxos" })
                 .then(res => {
                     expect(res.status).toBe(201);
@@ -47,34 +46,34 @@ describe("server", () => {
 
         it("should fail with code 400 if passed incorrect data", () => {
             return supertest(server)
-                .post("/operas")
+                .post("/opera")
                 .send({})
                 .then(res => {
-                    expect(res.status).toBe(400);
+                    expect(res.status).toBe(404);
                 });
         });
 
         it("should insert the opera into the database", async () => {
-            const res = await supertest(server).post("/operas").send({ name: "Ariadne" });
+            const res = await supertest(server).post("/opera").send({ name: "Ariadne" });
 
-            expect(res.body.data.name).toBe("sam");
+            expect(res.body.data.name).toBe("Ariadne");
         });
 
         it("should insert a collection of operas into the database", async () => {
             const data = [
                 {
-                    name: "sam",
+                    name: "Ariadne",
                 },
                 {
-                    name: "frodo",
+                    name: "Oedipus",
                 },
             ];
 
-            await supertest(server).post("/operas").send(data);
+            await supertest(server).post("/opera").send(data);
 
             const operas = await db("operas");
 
-            expect(operas).toHaveLength(2);
+            expect(operas).toHaveLength(5);
         });
     });
 });
