@@ -10,3 +10,8 @@ module.exports = knex(knexfile[environment]);
 
 
 // module.exports = knex(config);
+
+// const knex = require("knex")
+// const knexfile = require("../knexfile")
+
+// module.exports = knex(knexfile)
